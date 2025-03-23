@@ -1,8 +1,8 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
-const mockNames = require('./mocked-names.json');
+const mockNames = require('./mocks/mocked-names.json');
 
-router.get('/', (req, res) => {
+router.get('/', (_, res) => {
   res.json('Hello World!');
 });
 
@@ -13,7 +13,7 @@ router.get('/names', async (req, res) => {
     return res.json(mockNames);
   }
 
-  const filteredNames = mockNames.filter(name => (name.value.toLowerCase().includes(searchString.toLowerCase())));
+  const filteredNames = mockNames.filter(name => name.value.toLowerCase().includes(searchString.toLowerCase()));
 
   res.json(filteredNames);
 });

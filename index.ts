@@ -3,6 +3,7 @@ const express = require('express');
 const parser = require('body-parser');
 
 const nameRoutes = require('./src/routes/names');
+const loginRoutes = require('./src/routes/login');
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.use((req, res, next) => {
 });
 
 app.use(nameRoutes);
+app.use(loginRoutes);
 
 app.listen(9000, () => console.log('Backend started on 9000 port!'));
 
-module.exports = { app }
+module.exports = { app };
