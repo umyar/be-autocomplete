@@ -8,9 +8,9 @@ interface ICredentials {
   password: string;
 }
 
-const EMPTY_CREDS_ERROR = { error: 'email or password not provided' };
-const INVALID_CREDS_ERROR = { error: 'invalid credentials' };
-const VALID_CREDS_MSG = { message: 'login credentials passed' };
+const EMPTY_CREDS_ERROR = { status: 'error', message: 'email or password not provided' };
+const INVALID_CREDS_ERROR = { status: 'error', message: 'invalid credentials' };
+const VALID_CREDS_MSG = { status: 'ok', message: 'login credentials passed' };
 
 const getCredsFromDbByEmail = (email: string): ICredentials | undefined => {
   return mockCredentials.find(credsPair => {
@@ -28,7 +28,7 @@ const checkCredentials = (email: string, password: string): boolean => {
   return false;
 };
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
