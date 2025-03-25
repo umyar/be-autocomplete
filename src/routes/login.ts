@@ -1,7 +1,7 @@
 const { Router } = require('express');
-const router = Router();
-
 const mockCredentials = require('./mocks/mock-creds.json');
+
+const loginRouter = Router();
 
 interface ICredentials {
   email: string;
@@ -13,8 +13,8 @@ const INVALID_CREDS_ERROR = { status: 'error', message: 'invalid credentials' };
 const VALID_CREDS_MSG = { status: 'ok', message: 'login credentials passed' };
 
 const getCredsFromDbByEmail = (email: string): ICredentials | undefined => {
-  return mockCredentials.find(credsPair => {
-    credsPair.email === email;
+  return mockCredentials.find((credsPair: ICredentials) => {
+    return credsPair.email === email;
   });
 };
 
@@ -28,23 +28,20 @@ const checkCredentials = (email: string, password: string): boolean => {
   return false;
 };
 
-router.post('/login', async (req, res) => {
+loginRouter.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(401);
-    res.json(EMPTY_CREDS_ERROR);
+    return res.status(401).json(EMPTY_CREDS_ERROR);
   }
 
   const isCredentialsValid = checkCredentials(email, password);
 
   if (isCredentialsValid) {
-    res.status(200);
-    res.json(VALID_CREDS_MSG);
+    return res.status(200).json(VALID_CREDS_MSG);
   } else {
-    res.status(401);
-    res.json(INVALID_CREDS_ERROR);
+    return res.status(401).json(INVALID_CREDS_ERROR);
   }
 });
 
-module.exports = router;
+module.exports = loginRouter;
