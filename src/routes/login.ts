@@ -33,7 +33,7 @@ loginRouter.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(401).send(EMPTY_CREDS_ERROR.message);
+    return res.status(401).json(EMPTY_CREDS_ERROR);
   }
 
   const isCredentialsValid = checkCredentials(email, password);
@@ -41,7 +41,7 @@ loginRouter.post('/login', (req, res) => {
   if (isCredentialsValid) {
     return res.status(200).json(VALID_CREDS_MSG);
   } else {
-    return res.status(401).send(INVALID_CREDS_ERROR.message);
+    return res.status(401).json(INVALID_CREDS_ERROR);
   }
 });
 
